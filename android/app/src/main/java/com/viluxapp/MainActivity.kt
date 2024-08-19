@@ -1,12 +1,17 @@
 package com.viluxapp
 
+import android.os.Bundle
 import com.facebook.react.ReactActivity
 import com.facebook.react.ReactActivityDelegate
 import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint.fabricEnabled
 import com.facebook.react.defaults.DefaultReactActivityDelegate
+import org.devio.rn.splashscreen.SplashScreen;
 
 class MainActivity : ReactActivity() {
-
+  override fun onCreate(savedInstanceState: Bundle?) {
+    SplashScreen.show(this) // This is where SplashScreen.show() should be called
+    super.onCreate(savedInstanceState)
+  }
   /**
    * Returns the name of the main component registered from JavaScript. This is used to schedule
    * rendering of the component.
