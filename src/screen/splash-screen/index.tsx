@@ -3,8 +3,11 @@ import {Image, StyleSheet, View} from 'react-native';
 import {ColorsDark, ColorsLight} from '@theme/colors';
 import CustomButton from '@components/button';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
+import {RootStackParamList} from '@navigation/main-navigation';
 
 const StartedScreen = () => {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -22,7 +25,12 @@ const StartedScreen = () => {
         </View>
 
         <View style={styles.containerButton}>
-          <CustomButton title="Get Started" />
+          <CustomButton
+            onPress={() => {
+              navigation.navigate('Login Screen');
+            }}
+            title="Get Started"
+          />
         </View>
       </View>
     </SafeAreaView>
