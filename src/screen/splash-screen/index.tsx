@@ -1,7 +1,8 @@
 import CustomText from '@components/text';
-import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
+import {Image, StyleSheet, View} from 'react-native';
 import {ColorsDark, ColorsLight} from '@theme/colors';
 import CustomButton from '@components/button';
+import {SafeAreaView} from 'react-native-safe-area-context';
 
 const StartedScreen = () => {
   return (
