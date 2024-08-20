@@ -1,6 +1,11 @@
+import CustomHeader from '@components/header';
+import CustomText from '@components/text';
+import {NavigationProp, useNavigation} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import LoginScreen from '@screen/login';
 import StartedScreen from '@screen/splash-screen';
+import {ColorsDark} from '@theme/colors';
+import {StyleSheet, TouchableOpacity, View} from 'react-native';
 
 export type RootStackParamList = {
   'Splash Screen': undefined;
@@ -9,6 +14,8 @@ export type RootStackParamList = {
 
 const Stack = createNativeStackNavigator();
 function MainNavigation() {
+  const navigation = useNavigation<NavigationProp<RootStackParamList>>();
+
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -19,10 +26,25 @@ function MainNavigation() {
       <Stack.Screen
         name="Login Screen"
         component={LoginScreen}
-        options={{headerShown: false}}
+        options={{
+          header: () => (
+            <CustomHeader
+              onLeftPress={() => {
+                navigation.goBack();
+              }}
+              styleContainer={styles.container}
+            />
+          ),
+        }}
       />
     </Stack.Navigator>
   );
 }
 
 export default MainNavigation;
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: ColorsDark.black,
+  },
+});
