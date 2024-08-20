@@ -5,12 +5,12 @@
  * @format
  */
 
+import StartedScreen from '@screen/splash-screen';
 import React, {useEffect} from 'react';
 import {SafeAreaView, StatusBar, useColorScheme} from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import SplashScreenComponent from './src/screen/splash-screen';
 
 function App(): React.JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
@@ -29,7 +29,7 @@ function App(): React.JSX.Element {
         barStyle={isDarkMode ? 'light-content' : 'dark-content'}
         backgroundColor={backgroundStyle.backgroundColor}
       />
-      <SplashScreenComponent />
+      <StartedScreen />
     </SafeAreaView>
   );
 }

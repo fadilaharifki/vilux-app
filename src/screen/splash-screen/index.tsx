@@ -1,10 +1,9 @@
-/* eslint-disable react/react-in-jsx-scope */
-import CustomButton from '../../components/button';
-import CustomText from '../../components/text';
+import CustomText from '@components/text';
 import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
-import {ColorsDark, ColorsLight} from '../../theme/colors';
+import {ColorsDark, ColorsLight} from '@theme/colors';
+import CustomButton from '@components/button';
 
-const SplashScreen = () => {
+const StartedScreen = () => {
   return (
     <SafeAreaView>
       <View style={styles.container}>
@@ -29,7 +28,7 @@ const SplashScreen = () => {
   );
 };
 
-export default SplashScreen;
+export default StartedScreen;
 
 const styles = StyleSheet.create({
   container: {
