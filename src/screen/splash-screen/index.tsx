@@ -1,10 +1,30 @@
 /* eslint-disable react/react-in-jsx-scope */
-import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import CustomButton from '../../components/button';
+import CustomText from '../../components/text';
+import {Image, SafeAreaView, StyleSheet, View} from 'react-native';
+import {ColorsDark, ColorsLight} from '../../theme/colors';
 
 const SplashScreen = () => {
   return (
     <SafeAreaView>
-      <Text>dasas</Text>
+      <View style={styles.container}>
+        <View style={styles.containerContent}>
+          <Image
+            source={require('../../assets/images/logo.png')}
+            style={styles.image}
+            resizeMode="contain"
+          />
+          <CustomText style={styles.text}>
+            Lorem ipsum dolor sit amet consectetur. Egestas non id ornare
+            feugiat. Consectetur non molestie posuere feugiat nulla. Urna
+            adipisc
+          </CustomText>
+        </View>
+
+        <View style={styles.containerButton}>
+          <CustomButton title="Get Started" />
+        </View>
+      </View>
     </SafeAreaView>
   );
 };
@@ -12,20 +32,30 @@ const SplashScreen = () => {
 export default SplashScreen;
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    display: 'flex',
+    height: '100%',
+    backgroundColor: ColorsDark.black,
+    justifyContent: 'center',
+    padding: 20,
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  containerContent: {
+    flex: 2,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    gap: 50,
   },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
+  image: {
+    width: 150,
+    height: 150,
   },
-  highlight: {
-    fontWeight: '700',
+  text: {
+    color: ColorsLight.light,
+    textAlign: 'center',
+    lineHeight: 25,
+  },
+  containerButton: {
+    flex: 1,
+    justifyContent: 'flex-end',
   },
 });
