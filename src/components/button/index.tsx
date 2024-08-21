@@ -1,35 +1,58 @@
+import { ColorsDark, ColorsLight } from '@theme/colors';
 import React from 'react';
 import {
-  TouchableOpacity,
-  Text,
-  StyleSheet,
   GestureResponderEvent,
-  ViewStyle,
+  StyleSheet,
+  Text,
   TextStyle,
+  TouchableOpacity,
+  ViewStyle,
 } from 'react-native';
 
 interface CustomButtonProps {
   title: string;
   onPress?: (event: GestureResponderEvent) => void;
   variant?: 'primary' | 'secondary' | 'danger' | 'success';
+  outline?: boolean;
   style?: ViewStyle;
   textStyle?: TextStyle;
+  disabled?: boolean; // Menambahkan prop disabled
 }
 
 const CustomButton: React.FC<CustomButtonProps> = ({
   title,
   onPress,
   variant = 'primary',
+  outline = false,
   style,
   textStyle,
+  disabled = false,
 }) => {
-  const backgroundColor = getBackgroundColor(variant);
+  const backgroundColor = disabled
+    ? ColorsDark.wood
+    : outline
+      ? 'transparent'
+      : getBackgroundColor(variant);
+  const borderColor = disabled ? ColorsDark.wood : getBackgroundColor(variant);
+  const textColor = disabled
+    ? ColorsDark.gray
+    : outline
+      ? borderColor
+      : ColorsLight.light;
 
   return (
     <TouchableOpacity
-      style={[styles.button, {backgroundColor}, style]}
-      onPress={onPress}>
-      <Text style={[styles.text, textStyle]}>{title}</Text>
+      style={[
+        styles.button,
+        { backgroundColor, borderColor, borderWidth: outline ? 2 : 0 },
+        style,
+      ]}
+      onPress={disabled ? undefined : onPress}
+      disabled={disabled}
+    >
+      <Text style={[styles.text, { color: textColor }, textStyle]}>
+        {title}
+      </Text>
     </TouchableOpacity>
   );
 };
@@ -45,7 +68,7 @@ const getBackgroundColor = (
     case 'danger':
       return '#F44336';
     case 'success':
-      return '#F44336';
+      return '#4CAF50';
     default:
       return '#4CAF50';
   }
@@ -57,11 +80,11 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     alignItems: 'center',
     justifyContent: 'center',
+    borderColor: 'transparent',
   },
   text: {
-    color: '#FFFFFF',
     fontSize: 18,
-    fontWeight: 700,
+    fontWeight: '700',
   },
 });
 

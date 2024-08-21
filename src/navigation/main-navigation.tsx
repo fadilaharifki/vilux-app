@@ -1,15 +1,18 @@
 import CustomHeader from '@components/header';
-import CustomText from '@components/text';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ForgotPasswordScreen from '@screen/forgot-password';
 import LoginScreen from '@screen/login';
+import SignUpScreen from '@screen/signup';
 import StartedScreen from '@screen/splash-screen';
-import {ColorsDark} from '@theme/colors';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { ColorsDark } from '@theme/colors';
+import { StyleSheet } from 'react-native';
 
 export type RootStackParamList = {
   'Splash Screen': undefined;
   'Login Screen': undefined;
+  'Sign Up Screen': undefined;
+  'Forgot Password Screen': undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -19,13 +22,41 @@ function MainNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Splash Screen"
+        name='Splash Screen'
         component={StartedScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Login Screen"
+        name='Login Screen'
         component={LoginScreen}
+        options={{
+          header: () => (
+            <CustomHeader
+              onLeftPress={() => {
+                navigation.goBack();
+              }}
+              styleContainer={styles.container}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name='Sign Up Screen'
+        component={SignUpScreen}
+        options={{
+          header: () => (
+            <CustomHeader
+              onLeftPress={() => {
+                navigation.goBack();
+              }}
+              styleContainer={styles.container}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name='Forgot Password Screen'
+        component={ForgotPasswordScreen}
         options={{
           header: () => (
             <CustomHeader

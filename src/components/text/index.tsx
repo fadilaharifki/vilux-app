@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, StyleSheet, TextStyle} from 'react-native';
+import { StyleSheet, Text, TextStyle } from 'react-native';
 
 interface CustomTextProps {
   children: React.ReactNode;
@@ -18,7 +18,8 @@ const CustomText: React.FC<CustomTextProps> = ({
     <Text
       style={[styles.text, style]}
       numberOfLines={numberOfLines}
-      onPress={onPress}>
+      onPress={onPress}
+    >
       {children}
     </Text>
   );

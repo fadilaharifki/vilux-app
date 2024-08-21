@@ -1,14 +1,8 @@
-import React, {useState} from 'react';
-import {
-  TextInput,
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
-import {useController, Control} from 'react-hook-form';
-import {ColorPink, ColorRed, ColorsDark, ColorsLight} from '@theme/colors';
 import CustomText from '@components/text';
+import { ColorPink, ColorRed, ColorsDark, ColorsLight } from '@theme/colors';
+import React, { useState } from 'react';
+import { Control, useController } from 'react-hook-form';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ControlledInputProps {
@@ -27,15 +21,15 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
   secureTextEntry,
 }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
   const {
-    field: {onChange, onBlur, value},
-    fieldState: {error},
+    field: { onChange, onBlur, value },
+    fieldState: { error },
   } = useController({
     name,
     control,
     rules,
-    defaultValue: '',
   });
 
   const handleTogglePasswordVisibility = () => {
@@ -44,10 +38,24 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
 
   return (
     <View style={styles.container}>
-      <View style={styles.inputContainer}>
+      <View
+        style={[
+          styles.inputContainer,
+          isFocused && styles.focusedInputContainer,
+          error && styles.errorBorder,
+        ]}
+      >
         <TextInput
-          style={[styles.input, error && styles.errorBorder]}
-          onBlur={onBlur}
+          style={[
+            styles.input,
+            isFocused && styles.focusedInput,
+            error && styles.errorInput,
+          ]}
+          onBlur={() => {
+            setIsFocused(false);
+            onBlur();
+          }}
+          onFocus={() => setIsFocused(true)}
           onChangeText={onChange}
           value={value}
           placeholder={placeholder}
@@ -57,7 +65,8 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
         {secureTextEntry && (
           <TouchableOpacity
             style={styles.icon}
-            onPress={handleTogglePasswordVisibility}>
+            onPress={handleTogglePasswordVisibility}
+          >
             <Icon
               name={showPassword ? 'eye-off-outline' : 'eye-outline'}
               size={20}
@@ -77,21 +86,29 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 16,
+    marginBottom: 8,
+    marginTop: 8,
   },
   inputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     width: '100%',
+    backgroundColor: ColorsDark.wood,
+    borderRadius: 4,
+  },
+  focusedInputContainer: {
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: ColorsDark.gray,
   },
   input: {
     height: 50,
-    borderColor: ColorsDark.gray,
-    borderWidth: 1,
-    borderRadius: 4,
     paddingHorizontal: 10,
     flex: 1,
     color: ColorsLight.light,
+  },
+  focusedInput: {
+    backgroundColor: 'transparent',
   },
   icon: {
     position: 'absolute',
@@ -99,6 +116,11 @@ const styles = StyleSheet.create({
   },
   errorBorder: {
     borderColor: ColorRed.red,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+  },
+  errorInput: {
+    backgroundColor: 'transparent',
   },
   errorText: {
     color: ColorRed.red,
