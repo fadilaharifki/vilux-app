@@ -1,6 +1,7 @@
 export const ColorsDark = {
   black: '#000000',
   gray: '#828282',
+  wood: '#323232'
 };
 
 export const ColorsLight = {

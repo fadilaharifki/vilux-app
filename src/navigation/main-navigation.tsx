@@ -1,12 +1,11 @@
 import CustomHeader from '@components/header';
-import CustomText from '@components/text';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from '@screen/login';
 import SignUpScreen from '@screen/signup';
 import StartedScreen from '@screen/splash-screen';
-import {ColorsDark} from '@theme/colors';
-import {StyleSheet, TouchableOpacity, View} from 'react-native';
+import { ColorsDark } from '@theme/colors';
+import { StyleSheet } from 'react-native';
 
 export type RootStackParamList = {
   'Splash Screen': undefined;
@@ -21,12 +20,12 @@ function MainNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Splash Screen"
+        name='Splash Screen'
         component={StartedScreen}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Login Screen"
+        name='Login Screen'
         component={LoginScreen}
         options={{
           header: () => (
@@ -40,7 +39,7 @@ function MainNavigation() {
         }}
       />
       <Stack.Screen
-        name="Sign Up Screen"
+        name='Sign Up Screen'
         component={SignUpScreen}
         options={{
           header: () => (

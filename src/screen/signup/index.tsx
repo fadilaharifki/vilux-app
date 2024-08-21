@@ -1,41 +1,57 @@
-import CustomText from '@components/text';
-import {ScrollView, StyleSheet, View} from 'react-native';
-import {ColorBlue, ColorsDark, ColorsLight} from '@theme/colors';
 import CustomButton from '@components/button';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import PeoplePlusSVG from '@assets/svg/people-plus';
 import ControlledInput from '@components/form/control-input';
-import {useForm} from 'react-hook-form';
+import CustomDateTimePicker from '@components/form/date-time-picker';
+import CustomText from '@components/text';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { RootStackParamList } from '@navigation/main-navigation';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { ColorBlue, ColorsDark, ColorsLight } from '@theme/colors';
+import { useForm } from 'react-hook-form';
+import { ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Yup from 'yup';
-import {yupResolver} from '@hookform/resolvers/yup';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '@navigation/main-navigation';
 
-type FormValues = {
+interface FormValues {
+  fullname: string;
   username: string;
+  email: string;
+  birthDate: string;
   password: string;
-};
+  checkPassword: string;
+}
 
 const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const schema = Yup.object().shape({
-    username: Yup.string().required('Username is not Available!'),
+    fullname: Yup.string().required('Full Name cannot be empty!'),
+    username: Yup.string().required('Username cannot be empty!'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email cannot be empty!'),
+    birthDate: Yup.string().required('Date cannot be empty!'),
     password: Yup.string()
       .required('Wrong Password!')
       .min(8, 'Password must be at least 8 characters'),
+    checkPassword: Yup.string()
+      .required('Password confirmation is required!')
+      .oneOf([Yup.ref('password')], 'Passwords must match')
+      .min(8, 'Password confirmation must be at least 8 characters'),
   });
 
   const {
     control,
     handleSubmit,
-    formState: {errors},
+    formState: { errors },
   } = useForm<FormValues>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+  };
+  const handleConfirm = (date: Date) => {
+    console.log('Selected date:', date);
   };
 
   return (
@@ -53,40 +69,45 @@ const SignUpScreen = () => {
               <View style={styles.section1}>
                 <View style={styles.containerInput}>
                   <ControlledInput
-                    name="fullname"
+                    name='fullname'
                     control={control}
-                    placeholder="Full Name"
-                    rules={{required: true}}
+                    placeholder='Full Name'
+                    rules={{ required: true }}
                   />
                 </View>
                 <View style={styles.containerInput}>
                   <ControlledInput
-                    name="username"
+                    name='username'
                     control={control}
-                    placeholder="Usename"
-                    rules={{required: true}}
+                    placeholder='Usename'
+                    rules={{ required: true }}
                   />
                 </View>
               </View>
-              <ControlledInput
-                name="email"
+              <CustomDateTimePicker
+                mode='date'
+                name='birthDate'
                 control={control}
-                placeholder="Email Address"
-                rules={{required: true}}
               />
               <ControlledInput
-                name="password"
+                name='email'
                 control={control}
-                placeholder="Enter your password"
-                secureTextEntry
-                rules={{required: true}}
+                placeholder='Email Address'
+                rules={{ required: true }}
               />
               <ControlledInput
-                name="checkPassword"
+                name='password'
                 control={control}
-                placeholder="Re-Input Password"
+                placeholder='Enter your password'
                 secureTextEntry
-                rules={{required: true}}
+                rules={{ required: true }}
+              />
+              <ControlledInput
+                name='checkPassword'
+                control={control}
+                placeholder='Re-Input Password'
+                secureTextEntry
+                rules={{ required: true }}
               />
               <CustomText style={styles.forgotPassword}>
                 Forgot Password?
@@ -95,14 +116,15 @@ const SignUpScreen = () => {
           </View>
 
           <View style={styles.containerButton}>
-            <CustomButton onPress={handleSubmit(onSubmit)} title="Continue" />
+            <CustomButton onPress={handleSubmit(onSubmit)} title='Continue' />
             <CustomText style={styles.notHaveAccount}>
               Have an account yet?
               <CustomText
                 onPress={() => {
                   navigation.goBack();
                 }}
-                style={styles.signUp}>
+                style={styles.signUp}
+              >
                 {' '}
                 Sign In
               </CustomText>
