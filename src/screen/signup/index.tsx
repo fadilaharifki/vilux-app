@@ -16,7 +16,7 @@ type FormValues = {
   password: string;
 };
 
-const LoginScreen = () => {
+const SignUpScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
 
   const schema = Yup.object().shape({
@@ -43,26 +43,48 @@ const LoginScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.container}>
           <View style={styles.containerContent}>
-            <PeoplePlusSVG />
             <View style={styles.containerContentText}>
-              <CustomText style={styles.title}>
-                LOG IN FOR FULL ACCESS
-              </CustomText>
+              <CustomText style={styles.title}>CREATE NEW ACCOUNT?</CustomText>
               <CustomText style={styles.text}>
-                Register or Log in with your Phone Number
+                Please fill in the form to Continue
               </CustomText>
             </View>
             <View style={styles.containerForm}>
+              <View style={styles.section1}>
+                <View style={styles.containerInput}>
+                  <ControlledInput
+                    name="fullname"
+                    control={control}
+                    placeholder="Full Name"
+                    rules={{required: true}}
+                  />
+                </View>
+                <View style={styles.containerInput}>
+                  <ControlledInput
+                    name="username"
+                    control={control}
+                    placeholder="Usename"
+                    rules={{required: true}}
+                  />
+                </View>
+              </View>
               <ControlledInput
-                name="username"
+                name="email"
                 control={control}
-                placeholder="Phone Number or Username"
+                placeholder="Email Address"
                 rules={{required: true}}
               />
               <ControlledInput
                 name="password"
                 control={control}
                 placeholder="Enter your password"
+                secureTextEntry
+                rules={{required: true}}
+              />
+              <ControlledInput
+                name="checkPassword"
+                control={control}
+                placeholder="Re-Input Password"
                 secureTextEntry
                 rules={{required: true}}
               />
@@ -75,14 +97,14 @@ const LoginScreen = () => {
           <View style={styles.containerButton}>
             <CustomButton onPress={handleSubmit(onSubmit)} title="Continue" />
             <CustomText style={styles.notHaveAccount}>
-              Don’t have an account yet?
+              Have an account yet?
               <CustomText
                 onPress={() => {
-                  navigation.navigate('Sign Up Screen');
+                  navigation.goBack();
                 }}
                 style={styles.signUp}>
                 {' '}
-                Sign Up
+                Sign In
               </CustomText>
             </CustomText>
           </View>
@@ -92,7 +114,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   containerSafeAreaView: {
@@ -154,5 +176,12 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-end',
     gap: 20,
+  },
+  section1: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  containerInput: {
+    flex: 1,
   },
 });
