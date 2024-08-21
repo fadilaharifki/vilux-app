@@ -1,6 +1,7 @@
 import CustomButton from '@components/button';
 import ControlledInput from '@components/form/control-input';
 import CustomDateTimePicker from '@components/form/date-time-picker';
+import CustomPicker from '@components/form/select-picker';
 import CustomText from '@components/text';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { RootStackParamList } from '@navigation/main-navigation';
@@ -15,6 +16,7 @@ interface FormValues {
   fullname: string;
   username: string;
   email: string;
+  gender: string;
   birthDate: string;
   password: string;
   checkPassword: string;
@@ -26,6 +28,7 @@ const SignUpScreen = () => {
   const schema = Yup.object().shape({
     fullname: Yup.string().required('Full Name cannot be empty!'),
     username: Yup.string().required('Username cannot be empty!'),
+    gender: Yup.string().required('Gender cannot be empty!'),
     email: Yup.string()
       .email('Invalid email address')
       .required('Email cannot be empty!'),
@@ -87,6 +90,22 @@ const SignUpScreen = () => {
               <CustomDateTimePicker
                 mode='date'
                 name='birthDate'
+                label='Birth Date'
+                control={control}
+              />
+              <CustomPicker
+                name='gender'
+                placeholder='Gender'
+                items={[
+                  {
+                    value: '0',
+                    label: 'Perempuan',
+                  },
+                  {
+                    value: '1',
+                    label: 'Laki Laki',
+                  },
+                ]}
                 control={control}
               />
               <ControlledInput
@@ -109,14 +128,11 @@ const SignUpScreen = () => {
                 secureTextEntry
                 rules={{ required: true }}
               />
-              <CustomText style={styles.forgotPassword}>
-                Forgot Password?
-              </CustomText>
             </View>
           </View>
 
           <View style={styles.containerButton}>
-            <CustomButton onPress={handleSubmit(onSubmit)} title='Continue' />
+            <CustomButton onPress={handleSubmit(onSubmit)} title='Sign Up' />
             <CustomText style={styles.notHaveAccount}>
               Have an account yet?
               <CustomText
