@@ -6,8 +6,8 @@
     "reset": "npx react-native start --reset-cache",
     "android": "react-native run-android",
     "ios": "react-native run-ios",
-    "lint:check": "eslint \"src/**/*.{js,ts,json,tsx}\"",
-    "lint:fix": "eslint \"src/**/*.{js,ts,json,tsx}\" --fix",
+    "lint": "eslint .",
+    "format": "prettier --write .",
     "start": "react-native start",
     "test": "jest"
   },
