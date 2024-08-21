@@ -26,14 +26,22 @@ module.exports = [
       },
     },
     rules: {
-      'prettier/prettier': 'error',
-      'react/react-in-jsx-scope': 'off',
-      'react/jsx-filename-extension': [1, { extensions: ['.tsx'] }],
-      'react/jsx-closing-bracket-location': [1, 'tag-aligned'],
       'simple-import-sort/imports': 'error',
       'simple-import-sort/exports': 'error',
       'sort-keys': ['error', 'asc', { caseSensitive: false, natural: true }],
+      'react/jsx-sort-props': [
+        'error',
+        {
+          callbacksLast: true,
+          shorthandFirst: true,
+          shorthandLast: false,
+          multiline: 'ignore',
+          ignoreCase: true,
+          noSortAlphabetically: false,
+          reservedFirst: true,
+        },
+      ],
     },
-    ignores: ['node_modules/', 'dist/'],
+    ignores: ['node_modules/', 'dist/', 'babel.config.js', 'eslint.config.js'],
   },
 ];
