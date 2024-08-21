@@ -3,7 +3,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import { ColorPink, ColorRed, ColorsDark } from '@theme/colors';
 import React, { useState } from 'react';
 import { Control, useController } from 'react-hook-form';
-import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 interface CustomDateTimePickerProps {
@@ -61,7 +67,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
       options.month = undefined;
       options.day = undefined;
     }
-    
+
     return new Intl.DateTimeFormat('en-US', options).format(date);
   };
 
@@ -82,16 +88,14 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
         }}
         onFocus={() => setIsFocused(true)}
       >
-        <Text style={styles.label}>
-          {value ? formatDate(value) : label}
-        </Text>
-        <Icon name="calendar" size={24} color="#999" />
+        <Text style={styles.label}>{value ? formatDate(value) : label}</Text>
+        <Icon name='calendar' size={24} color='#999' />
       </TouchableOpacity>
       {show && (
         <DateTimePicker
           value={value || new Date()} // Ensure DateTimePicker gets a valid Date object
           mode={mode}
-          display="default"
+          display='default'
           onChange={onChangeDate}
         />
       )}
@@ -105,7 +109,7 @@ const CustomDateTimePicker: React.FC<CustomDateTimePickerProps> = ({
 };
 
 const styles = StyleSheet.create({
-  containerDatePicker:{
+  containerDatePicker: {
     marginBottom: 8,
     marginTop: 8,
   },
@@ -118,7 +122,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     height: 50,
     borderWidth: 1,
-    borderColor: ColorsDark.gray, 
+    borderColor: ColorsDark.gray,
   },
   focused: {
     borderColor: ColorsDark.gray,

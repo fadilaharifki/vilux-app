@@ -30,26 +30,24 @@ const ControlledPicker: React.FC<ControlledPickerProps> = ({
 
   return (
     <View style={styles.container}>
-      <View
-        style={[
-          styles.pickerContainer,
-          error && styles.errorBorder,
-        ]}
-      >
+      <View style={[styles.pickerContainer, error && styles.errorBorder]}>
         <Picker
           selectedValue={value}
           onValueChange={(itemValue) => onChange(itemValue)}
           onBlur={onBlur}
           style={styles.picker}
-          mode="dialog"
+          mode='dialog'
           dropdownIconColor={ColorsDark.gray}
         >
-          {placeholder && <Picker.Item label={placeholder} value="" />}
+          {placeholder && <Picker.Item label={placeholder} value='' />}
           {items.map((item) => (
-            <Picker.Item key={item.value} label={item.label} value={item.value} />
+            <Picker.Item
+              key={item.value}
+              label={item.label}
+              value={item.value}
+            />
           ))}
         </Picker>
-       
       </View>
       {error && (
         <View style={styles.containerError}>

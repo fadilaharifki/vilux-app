@@ -2,12 +2,7 @@ import CustomText from '@components/text';
 import { ColorPink, ColorRed, ColorsDark, ColorsLight } from '@theme/colors';
 import React, { useState } from 'react';
 import { Control, useController } from 'react-hook-form';
-import {
-  StyleSheet,
-  TextInput,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import { StyleSheet, TextInput, TouchableOpacity, View } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 interface ControlledInputProps {
@@ -51,7 +46,11 @@ const ControlledInput: React.FC<ControlledInputProps> = ({
         ]}
       >
         <TextInput
-          style={[styles.input, isFocused && styles.focusedInput, error && styles.errorInput]}
+          style={[
+            styles.input,
+            isFocused && styles.focusedInput,
+            error && styles.errorInput,
+          ]}
           onBlur={() => {
             setIsFocused(false);
             onBlur();

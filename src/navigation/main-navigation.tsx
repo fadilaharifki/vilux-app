@@ -1,6 +1,7 @@
 import CustomHeader from '@components/header';
 import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import ForgotPasswordScreen from '@screen/forgot-password';
 import LoginScreen from '@screen/login';
 import SignUpScreen from '@screen/signup';
 import StartedScreen from '@screen/splash-screen';
@@ -11,6 +12,7 @@ export type RootStackParamList = {
   'Splash Screen': undefined;
   'Login Screen': undefined;
   'Sign Up Screen': undefined;
+  'Forgot Password Screen': undefined;
 };
 
 const Stack = createNativeStackNavigator();
@@ -41,6 +43,20 @@ function MainNavigation() {
       <Stack.Screen
         name='Sign Up Screen'
         component={SignUpScreen}
+        options={{
+          header: () => (
+            <CustomHeader
+              onLeftPress={() => {
+                navigation.goBack();
+              }}
+              styleContainer={styles.container}
+            />
+          ),
+        }}
+      />
+      <Stack.Screen
+        name='Forgot Password Screen'
+        component={ForgotPasswordScreen}
         options={{
           header: () => (
             <CustomHeader

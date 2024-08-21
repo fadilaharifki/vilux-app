@@ -1,10 +1,10 @@
 import CustomText from '@components/text';
-import {Image, StyleSheet, View} from 'react-native';
-import {ColorsDark, ColorsLight} from '@theme/colors';
+import { Image, StyleSheet, View } from 'react-native';
+import { ColorsDark, ColorsLight } from '@theme/colors';
 import CustomButton from '@components/button';
-import {SafeAreaView} from 'react-native-safe-area-context';
-import {NavigationProp, useNavigation} from '@react-navigation/native';
-import {RootStackParamList} from '@navigation/main-navigation';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import { RootStackParamList } from '@navigation/main-navigation';
 
 const StartedScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
@@ -15,7 +15,7 @@ const StartedScreen = () => {
           <Image
             source={require('../../assets/images/logo.png')}
             style={styles.image}
-            resizeMode="contain"
+            resizeMode='contain'
           />
           <CustomText style={styles.text}>
             Lorem ipsum dolor sit amet consectetur. Egestas non id ornare
@@ -29,7 +29,7 @@ const StartedScreen = () => {
             onPress={() => {
               navigation.navigate('Login Screen');
             }}
-            title="Get Started"
+            title='Get Started'
           />
         </View>
       </View>

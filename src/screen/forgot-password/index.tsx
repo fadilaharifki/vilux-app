@@ -1,4 +1,4 @@
-import PeoplePlusSVG from '@assets/svg/people-plus';
+import ReqSuccessSVG from '@assets/svg/req-success';
 import CustomButton from '@components/button';
 import ControlledInput from '@components/form/control-input';
 import ModalComponent from '@components/modal';
@@ -13,12 +13,11 @@ import { ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Yup from 'yup';
 
-type FormValues = {
-  username: string;
-  password: string;
-};
+interface FormValues {
+  email: string;
+}
 
-const LoginScreen = () => {
+const ForgotPasswordScreen = () => {
   const navigation = useNavigation<NavigationProp<RootStackParamList>>();
   const [modalVisible, setModalVisible] = useState(false);
 
@@ -26,23 +25,29 @@ const LoginScreen = () => {
   const closeModal = () => setModalVisible(false);
 
   const schema = Yup.object().shape({
-    username: Yup.string().required('Username is not Available!'),
-    password: Yup.string()
-      .required('Wrong Password!')
-      .min(8, 'Password must be at least 8 characters'),
+    email: Yup.string()
+      .email('Invalid email address')
+      .required('Email cannot be empty!'),
   });
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty },
   } = useForm<FormValues>({
     mode: 'all',
     resolver: yupResolver(schema),
+    defaultValues: {
+      email: '',
+    },
   });
 
   const onSubmit = (data: FormValues) => {
     console.log(data);
+    openModal();
+  };
+  const handleConfirm = (date: Date) => {
+    console.log('Selected date:', date);
   };
 
   return (
@@ -50,74 +55,52 @@ const LoginScreen = () => {
       <ScrollView contentContainerStyle={styles.scrollViewContent}>
         <View style={styles.container}>
           <View style={styles.containerContent}>
-            <PeoplePlusSVG />
             <View style={styles.containerContentText}>
               <CustomText style={styles.title}>
-                LOG IN FOR FULL ACCESS
+                ENTER YOUR EMAIL ADDRESS
               </CustomText>
               <CustomText style={styles.text}>
-                Register or Log in with your Phone Number
+                We will send a verification code to this Email
               </CustomText>
             </View>
             <View style={styles.containerForm}>
               <ControlledInput
-                name='username'
+                name='email'
                 control={control}
-                placeholder='Phone Number or Username'
+                placeholder='Email Address'
                 rules={{ required: true }}
               />
-              <ControlledInput
-                name='password'
-                control={control}
-                placeholder='Enter your password'
-                secureTextEntry
-                rules={{ required: true }}
-              />
-              <CustomText onPress={openModal} style={styles.forgotPassword}>
-                Forgot Password?
-              </CustomText>
             </View>
           </View>
 
           <View style={styles.containerButton}>
-            <CustomButton onPress={handleSubmit(onSubmit)} title='Continue' />
-            <CustomText style={styles.notHaveAccount}>
-              Don’t have an account yet?
-              <CustomText
-                onPress={() => {
-                  navigation.navigate('Sign Up Screen');
-                }}
-                style={styles.signUp}
-              >
-                {' '}
-                Sign Up
-              </CustomText>
-            </CustomText>
+            <CustomButton
+              disabled={!isDirty}
+              onPress={handleSubmit(onSubmit)}
+              title='Continue'
+            />
           </View>
         </View>
       </ScrollView>
       <ModalComponent
         visible={modalVisible}
         onClose={closeModal}
-        title='FORGET PASSWORD'
+        title='REQUEST SUCCESS'
       >
         <View style={styles.containerModal}>
           <View>
             <CustomText style={styles.subTitle}>
-              Head over to reset your Password now
+              Please check your email to reset Password
             </CustomText>
           </View>
+          <ReqSuccessSVG />
           <View style={styles.containerButtonModal}>
             <CustomButton
+              style={styles.buttonContinue}
               onPress={() => {
-                navigation.navigate('Forgot Password Screen');
+                // navigation.navigate('Forgot Password Screen');
               }}
-              title='Reset Password'
-            />
-            <CustomButton
-              onPress={() => setModalVisible(false)}
-              outline
-              title='Cancel'
+              title='Continue'
             />
           </View>
         </View>
@@ -126,7 +109,7 @@ const LoginScreen = () => {
   );
 };
 
-export default LoginScreen;
+export default ForgotPasswordScreen;
 
 const styles = StyleSheet.create({
   containerSafeAreaView: {
@@ -139,17 +122,17 @@ const styles = StyleSheet.create({
     display: 'flex',
     height: '100%',
     backgroundColor: ColorsDark.black,
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     padding: 20,
   },
   containerForm: {
     width: '100%',
   },
   containerContent: {
-    flex: 1,
     justifyContent: 'flex-end',
-    alignItems: 'center',
+    alignItems: 'flex-start',
     gap: 40,
+    marginTop: 50,
   },
   containerContentText: {
     gap: 15,
@@ -160,16 +143,14 @@ const styles = StyleSheet.create({
   },
   title: {
     color: ColorsLight.light,
-    textAlign: 'center',
     lineHeight: 25,
     fontSize: 24,
     fontWeight: 600,
   },
   text: {
     color: ColorsDark.gray,
-    textAlign: 'center',
     lineHeight: 25,
-    fontSize: 14,
+    fontSize: 16,
   },
   notHaveAccount: {
     color: ColorsLight.light,
@@ -189,15 +170,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     gap: 20,
   },
+  section1: {
+    flexDirection: 'row',
+    gap: 10,
+  },
+  containerInput: {
+    flex: 1,
+  },
   containerButtonModal: {
     display: 'flex',
     gap: 13,
   },
   containerModal: {
     display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
     gap: 30,
   },
   subTitle: {
     textAlign: 'center',
+    fontSize: 14,
   },
+  buttonContinue: { borderRadius: 100, paddingHorizontal: 30 },
 });

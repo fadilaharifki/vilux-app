@@ -47,6 +47,7 @@ const SignUpScreen = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<FormValues>({
+    mode: 'all',
     resolver: yupResolver(schema),
   });
 
